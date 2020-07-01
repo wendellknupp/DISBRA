@@ -14,7 +14,7 @@ name: "Save Variable",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Other Stuff",
+section: "Variable Things",
 
 //---------------------------------------------------------------------
 // Action Subtitle

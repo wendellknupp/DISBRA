@@ -14,7 +14,7 @@ name: "Send File",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Messaging",
+section: "File Stuff",
 
 //---------------------------------------------------------------------
 // Action Subtitle

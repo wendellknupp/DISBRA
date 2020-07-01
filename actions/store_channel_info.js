@@ -24,9 +24,30 @@ section: "Channel Control",
 
 subtitle: function(data) {
 	const channels = ['Same Channel', 'Mentioned Channel', '1st Server Channel', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const info = ['Channel Object', 'Channel ID', 'Channel Name', 'Channel Topic', 'Channel Last Message', 'Channel Position', 'Channel Is NSFW?'];
+	const info = ['Channel Object', 'Channel ID', 'Channel Name', 'Channel Topic', 'Channel Last Message', 'Channel Position', 'Channel Is NSFW?', 'Channel Is DM?', 'Channel Is Deleteable?', 'Channel Creation Date', 'Channel Category Name', 'Created At', 'Created At Timestamp'];
 	return `${channels[parseInt(data.channel)]} - ${info[parseInt(data.info)]}`;
 },
+
+//---------------------------------------------------------------------
+// DBM Mods Manager Variables (Optional but nice to have!)
+//
+// These are variables that DBM Mods Manager uses to show information
+// about the mods for people to see in the list.
+//---------------------------------------------------------------------
+
+// Who made the mod (If not set, defaults to "DBM Mods")
+author: "DBM, Lurker & Lasse",
+
+// The version of the mod (Defaults to 1.0.0)
+version: "1.9.5", //Added in 1.9.1
+
+// A short description to show on the mod line for this mod (Must be on a single line)
+short_description: "Added more options to default action.",
+
+// If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
+
+
+//---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 // Action Storage Function
@@ -57,7 +78,21 @@ variableStorage: function(data, varType) {
 			dataType = "Number";
 			break;
 		case 6:
+		case 7:
+		case 8:
 			dataType = "Boolean";
+			break;
+		case 9:
+			dataType = "Date";
+			break;
+		case 10:
+			dataType = "Text";
+			break;
+			case 11:
+			dataType = "Created At";
+			break;
+			case 12:
+			dataType = "Created At Timestamp";
 			break;
 	}
 	return ([data.varName2, dataType]);
@@ -91,6 +126,7 @@ fields: ["channel", "varName", "info", "storage", "varName2"],
 
 html: function(isEvent, data) {
 	return `
+<div><p>This action has been modified by DBM Mods.</p></div><br>
 <div>
 	<div style="float: left; width: 35%;">
 		Source Channel:<br>
@@ -115,6 +151,11 @@ html: function(isEvent, data) {
 			<option value="5">Channel Position</option>
 			<option value="6">Channel Is NSFW?</option>
 			<option value="7">Channel Is DM?</option>
+			<option value="8">Channel Is Deleteable?</option>
+			<option value="9">Channel Creation Date</option>
+			<option value="10">Channel Category Name</option>
+			<option value="11">Created At</option>
+			<option value="12">Created At Timestamp</option>
 		</select>
 	</div>
 </div><br>
@@ -187,6 +228,21 @@ action: function(cache) {
 			break;
 		case 7:
 			result = (targetChannel instanceof DiscordJS.GroupDMChannel || targetChannel instanceof DiscordJS.DMChannel);
+			break;
+		case 8:
+			result = targetChannel.deletable;
+			break;
+		case 9:
+			result = targetChannel.createdAt;
+			break;
+		case 10:
+			result = targetChannel.parent.name;
+			break;
+		case 11:
+			result = targetChannel.createdAt;
+			break;
+		case 12:
+			result = targetChannel.createdTimestamp;
 			break;
 		default:
 			break;
